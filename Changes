@@ -1,5 +1,9 @@
 Revision history for Perl extension WWW::Scraper::ISBN.
 
+0.25 - 01/05/2005 - A. Schamp
+	Made a number of changes to the documentation to correct errors,
+	applied patches submitted by Barbie.
+
 0.24 - 04/07/2004 - A. Schamp
 	Removed an old dependency from the test.
 	Whoops.

@@ -6,8 +6,10 @@ use warnings;
 use WWW::Scraper::ISBN::Record;
 use Carp;
 
-our $VERSION = '0.24';
+our $VERSION = '0.25';
 
+eval "use Business::ISBN";
+my $business_isbn_loaded = ! $@;
 
 # Preloaded methods go here.
 sub new {
@@ -37,6 +39,12 @@ sub reset_drivers {
 sub search {
 	my $self = shift;
 	my $isbn = shift;
+	
+	if($business_isbn_loaded) {
+		my $isbn_object = Business::ISBN->new($isbn);
+		croak("Invalid ISBN specified.\n") if (!$isbn_object->is_valid);
+	}
+
 	if( $self->drivers == 0 ) {
 		croak("No search drivers specified.\n");
 	}
@@ -82,7 +90,7 @@ sources on the internet, by ISBN number.
 	print $book->{'author'};
   	# etc
   } else {
-	print $book->error;
+	print $record->error;
   }
 
 =head1 REQUIRES
@@ -145,6 +153,8 @@ Searches for information on the given ISBN number.  It goes through the drivers 
 specified, stopping when the book is found or all drivers are exhausted.  It returns a 
 L<WWW::Scraper::ISBN::Record> object, which will have its C<found()> field set according to whether or not the 
 search was successful.
+
+If you have L<Business::ISBN> installed, the method will attempt to validate the given isbn.
 
 =back
 
