@@ -1,16 +1,11 @@
-WWW/Scraper/ISBN version 0.01
+WWW/Scraper/ISBN version 0.21
 =============================
 
-The README is used to introduce the module and provide instructions on
-how to install the module, any machine dependencies it may have (for
-example C compilers and installed libraries) and any other information
-that should be provided before the module is installed.
-
-A README file is required for CPAN modules since CPAN extracts the
-README file from a module distribution so that people browsing the
-archive can use it get an idea of the modules uses. It is usually a
-good idea to provide version information here so that people can
-decide whether fixes for the module are worth downloading.
+The WWW::Scraper::ISBN class was built as a way to retrieve information on books from multiple sources
+easily.  It utilizes at least one driver implemented as a subclass of L<WWW::Scraper::ISBN::Driver>, each of
+which is designed to scrape from a single source.  Because we found that different sources had different
+information available on different books, we designed a basic interface that could be implemented in
+whatever ways necessary to retrieve the desired information.
 
 INSTALLATION
 
@@ -25,13 +20,12 @@ DEPENDENCIES
 
 This module requires these other modules and libraries:
 
-  blah blah blah
+   Carp
+   WWW::Scraper::ISBN::Record
 
 COPYRIGHT AND LICENCE
 
-Put the correct copyright and licence information here.
-
-Copyright (C) 2004 root
+Copyright (C) 2004 Andy Schamp, andy@schamp.net
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 

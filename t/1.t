@@ -12,18 +12,5 @@ BEGIN { use_ok('WWW::Scraper::ISBN') };
 #########################
 
 # Insert your test code below, the Test::More module is use()ed here so read
-# its man page ( perldoc Test::More ) for help writing this test script.
+# its man page ( perldoc Test::More ) for help writing this test script
 
-
-my $src = WWW::Scraper::ISBN->new();
-$src->drivers( "LOC", "ISBNnu" );
-my $book_record = $src->search("0195083792");
-if ($book_record->found) {
-	print "found!\n";
-	print "found in: ".$book_record->found_in."\n";
-	print "book:\n";
-	dump($book_record->book);
-} else {
-	print "woah!\n";
-	print "crapnotfound\n";
-}

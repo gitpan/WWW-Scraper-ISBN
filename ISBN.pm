@@ -28,7 +28,7 @@ our @EXPORT = qw(
 	
 );
 
-our $VERSION = '0.18';
+our $VERSION = '0.21';
 
 
 # Preloaded methods go here.
@@ -106,13 +106,18 @@ sources on the internet, by ISBN number.
 
 Requires the following modules be installed:
 
-WWW::Scraper::ISBN::Record
-Carp
+=over 4
+
+=item L<WWW::Scraper::ISBN::Record>
+
+=item L<Carp>
+
+=back
 
 =head1 DESCRIPTION
 
 The WWW::Scraper::ISBN class was built as a way to retrieve information on books from multiple sources 
-easily.  It utilizes at least one driver implemented as a subclass of WWW::Scraper::ISBN::Driver, each of 
+easily.  It utilizes at least one driver implemented as a subclass of L<WWW::Scraper::ISBN::Driver>, each of 
 which is designed to scrape from a single source.  Because we found that different sources had different 
 information available on different books, we designed a basic interface that could be implemented in 
 whatever ways necessary to retrieve the desired information.
@@ -123,15 +128,17 @@ None by default.
 
 =head1 METHODS
 
-=head2 new()
+=over 4
+
+=item C<new()>
 
 Class constructor.  Returns a reference to an empty scraper object.  No drivers by default
 
-=head2 drivers() or drivers($DRIVER1, $DRIVER2)
+=item C<drivers() or drivers($DRIVER1, $DRIVER2)>
 
-foreach my $driver ( $scraper->drivers() ) { ... }
+   foreach my $driver ( $scraper->drivers() ) { ... }
 
-$scraper->drivers("DRIVER1", "DRIVER2");
+   $scraper->drivers("DRIVER1", "DRIVER2");
 
 Accessor/Mutator method which handles the drivers that this instance of the WWW::Scraper::ISBN class 
 should utilize.  The appropriate driver module must be installed (e.g. WWW::Scraper::ISBN::DRIVER1_Driver 
@@ -139,54 +146,59 @@ for "DRIVER1", etc.).  The order of arguments determines the order in which the 
 
 When this method is called, it loads the specified drivers using 'require'.
 
-Must be set before search() method is called.
+Must be set before C<search()> method is called.
 
-=head2 search($isbn)
+=item C<search($isbn)>
 
-my $record = $scraper->search("123456789X");
+   my $record = $scraper->search("123456789X");
 
 Searches for information on the given ISBN number.  It goes through the drivers in the order they are 
 specified, stopping when the book is found or all drivers are exhausted.  It returns a 
-WWW::Scraper::ISBN::Record object, which will have its found() field set according to whether or not the 
+L<WWW::Scraper::ISBN::Record> object, which will have its C<found()> field set according to whether or not the 
 search was successful.
+
+=back
 
 =head1 CODE EXAMPLE
 
-use WWW::Scraper::ISBN;
+    use WWW::Scraper::ISBN;
 
-# instantiate the object
-my $scraper = WWW::Scraper::ISBN->new();
+    # instantiate the object
+    my $scraper = WWW::Scraper::ISBN->new();
 
-# load the drivers.  requires that 
-#	WWW::Scraper::ISBN::LOC_Driver and
-#	WWW::Scraper::ISBN::ISBNnu_Driver 
-# be installed
-$scraper->drivers("LOC", "ISBNnu"); 
+    # load the drivers.  requires that 
+    #	WWW::Scraper::ISBN::LOC_Driver and
+    #	WWW::Scraper::ISBN::ISBNnu_Driver 
+    # be installed
+    $scraper->drivers("LOC", "ISBNnu"); 
 
-@isbns = [ "123456789X", "132457689X", "987654321X" ];
+    @isbns = [ "123456789X", "132457689X", "987654321X" ];
 
-foreach my $num (@isbns) {
-	$scraper->isbn($num);
-	$scraper->search($scraper->isbn);
-	if ($scraper->found) {
-		my $b = $scraper->book;
-		print "Title: ".$b->{'title'}."\n";
-		print "Author: ".$b->{'author'}."\n\n";
-	} else {
-		print "Book: ".$scraper->isbn." not found.\n\n";
-	}
-}
+    foreach my $num (@isbns) {
+        $scraper->isbn($num);
+        $scraper->search($scraper->isbn);
+        if ($scraper->found) {
+                my $b = $scraper->book;
+                print "Title: ".$b->{'title'}."\n";
+                print "Author: ".$b->{'author'}."\n\n";
+        } else {
+                print "Book: ".$scraper->isbn." not found.\n\n";
+        }
+    }
 
 =head1 SEE ALSO
 
-WWW::Scraper::ISBN::Driver
-WWW::Scraper::ISBN::Record
+=over 4
 
-No mailing list or website currently available.  Primary development done through CSX [http://csx.calvin.edu/]
+=item L<WWW::Scraper::ISBN::Driver>
+
+=item L<WWW::Scraper::ISBN::Record>
+
+No mailing list or website currently available.  Primary development done through CSX ( L<http://csx.calvin.edu/> )
 
 =head1 AUTHOR
 
-Andy Schamp, E<lt>ams5@calvin.eduE<gt>
+Andy Schamp, E<lt>andy@schamp.netE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 

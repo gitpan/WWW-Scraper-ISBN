@@ -5,7 +5,10 @@ use ExtUtils::MakeMaker;
 WriteMakefile(
     'NAME'		=> 'WWW::Scraper::ISBN',
     'VERSION_FROM'	=> 'ISBN.pm', # finds $VERSION
-    'PREREQ_PM'		=> {}, # e.g., Module::Name => 1.1
+    'PREREQ_PM'		=> {
+			Carp => 1.0,
+			WWW::Scraper::ISBN::Record => 0.15
+			}, # e.g., Module::Name => 1.1
     ($] >= 5.005 ?    ## Add these new keywords supported since 5.005
-      ( AUTHOR     => 'root <root@nonet>') : ()),
+      ( AUTHOR     => 'Andy Schamp <andy@schamp.net>') : ()),
 );
