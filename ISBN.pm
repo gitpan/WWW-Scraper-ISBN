@@ -28,7 +28,7 @@ our @EXPORT = qw(
 	
 );
 
-our $VERSION = '0.21';
+our $VERSION = '0.22';
 
 
 # Preloaded methods go here.
@@ -43,11 +43,16 @@ sub new {
 
 sub drivers {
 	my $self = shift;
-	$self->{DRIVERS} = [];
 	while ($_ = shift) {  push @{$self->{DRIVERS}}, $_; }
 	foreach my $driver ( @{ $self->{DRIVERS} }) {
 		require "WWW/Scraper/ISBN/".$driver."_Driver.pm";
 	}
+	return @{ $self->{DRIVERS} };
+}
+
+sub reset_drivers {
+	my $self = shift;
+	$self->{DRIVERS} = [];
 	return @{ $self->{DRIVERS} };
 }
 
@@ -147,6 +152,12 @@ for "DRIVER1", etc.).  The order of arguments determines the order in which the 
 When this method is called, it loads the specified drivers using 'require'.
 
 Must be set before C<search()> method is called.
+
+=item C<reset_drivers>
+
+   $scraper->reset_drivers;
+
+Sets the list of drivers to an empty array.  Will disable search feature until a new driver is specified.
 
 =item C<search($isbn)>
 

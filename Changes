@@ -1,6 +1,11 @@
 Revision history for Perl extension WWW::Scraper::ISBN.
 
-0.21 - 3/30/2004
+0.22 - 04/03/2004 - A. Schamp
+	Fixed a bug that reset the drivers array.
+
+0.21 - 03/30/2004 - A. Schamp
 	Started using Changes file
 	Fixed Test (By removing it)
 	Documentation, dependencies
+
+
