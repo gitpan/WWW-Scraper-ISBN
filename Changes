@@ -1,23 +1,29 @@
-Revision history for Perl extension WWW::Scraper::ISBN.
+Revision history for Perl distribution WWW::Scraper::ISBN
+=========================================================
 
-0.25 - 01/05/2005 - A. Schamp
-	Made a number of changes to the documentation to correct errors,
-	applied patches submitted by Barbie.
+0.26    2013-08-25
+        - New Maintainer: Barbie.
+        - move module into lib directory structure.
+        - change file dates changed to meet W3CDTF standards.
+        - reworked Makefile.PL for clarity.
+        - added META.json and updated META.yml.
+        - extended test suite.
+        - Fixed RT#44792, thanks to Ben Bullock (BKB).
 
-0.24 - 04/07/2004 - A. Schamp
-	Removed an old dependency from the test.
-	Whoops.
+0.25    2005-05-01
+        - Made a number of changes to the documentation to correct errors,
+          applied patches submitted by Barbie.
 
-0.23 - 04/06/2004 - A. Schamp
-	Removed Exporter stuff and 'use 5.008', &c,
-	by request
+0.24    2004-07-04
+        - Removed an old dependency from the test. Whoops.
 
-0.22 - 04/03/2004 - A. Schamp
-	Fixed a bug that reset the drivers array.
+0.23    2004-06-04
+        - Removed Exporter stuff and 'use 5.008', &c,  by request
 
-0.21 - 03/30/2004 - A. Schamp
-	Started using Changes file
-	Fixed Test (By removing it)
-	Documentation, dependencies
+0.22    2004-03-04
+        - Fixed a bug that reset the drivers array.
 
-
+0.21    2004-30-03
+        - Started using Changes file
+        - Fixed Test (By removing it)
+        - Documentation, dependencies
