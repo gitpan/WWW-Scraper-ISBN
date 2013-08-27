@@ -1,6 +1,11 @@
 Revision history for Perl distribution WWW::Scraper::ISBN
 =========================================================
 
+0.27    2013-08-27
+        - American dates!
+        - updated prerequisities.
+        - further extended test suite.
+
 0.26    2013-08-25
         - New Maintainer: Barbie.
         - move module into lib directory structure.
@@ -10,20 +15,20 @@ Revision history for Perl distribution WWW::Scraper::ISBN
         - extended test suite.
         - Fixed RT#44792, thanks to Ben Bullock (BKB).
 
-0.25    2005-05-01
+0.25    2005-01-05
         - Made a number of changes to the documentation to correct errors,
           applied patches submitted by Barbie.
 
-0.24    2004-07-04
+0.24    2004-04-07
         - Removed an old dependency from the test. Whoops.
 
-0.23    2004-06-04
+0.23    2004-04-06
         - Removed Exporter stuff and 'use 5.008', &c,  by request
 
-0.22    2004-03-04
+0.22    2004-04-03
         - Fixed a bug that reset the drivers array.
 
-0.21    2004-30-03
+0.21    2004-03-30
         - Started using Changes file
         - Fixed Test (By removing it)
         - Documentation, dependencies

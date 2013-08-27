@@ -6,65 +6,67 @@ use warnings;
 use Carp;
 use WWW::Scraper::ISBN::Record;
 
-our $VERSION = '0.26';
+our $VERSION = '0.27';
 
 eval "use Business::ISBN";
 my $business_isbn_loaded = ! $@;
 
 # Preloaded methods go here.
 sub new {
-	my $proto = shift;
-	my $class = ref($proto) || $proto;
-	my $self = {};
-	$self->{DRIVERS} = [];
-	bless ($self, $class);
-	return $self;
+    my $proto = shift;
+    my $class = ref($proto) || $proto;
+
+    my $self = {
+        DRIVERS => []
+    };
+
+    bless ($self, $class);
+    return $self;
 }
 
 sub drivers {
-	my $self = shift;
-	while ($_ = shift) {  push @{$self->{DRIVERS}}, $_; }
-	foreach my $driver ( @{ $self->{DRIVERS} }) {
-		require "WWW/Scraper/ISBN/".$driver."_Driver.pm";
-	}
-	return @{ $self->{DRIVERS} };
+    my $self = shift;
+    while ($_ = shift) {  push @{$self->{DRIVERS}}, $_; }
+    foreach my $driver ( @{ $self->{DRIVERS} }) {
+        require "WWW/Scraper/ISBN/".$driver."_Driver.pm";
+    }
+    return @{ $self->{DRIVERS} };
 }
 
 sub reset_drivers {
-	my $self = shift;
-	$self->{DRIVERS} = [];
-	return @{ $self->{DRIVERS} };
+    my $self = shift;
+    $self->{DRIVERS} = [];
+    return @{ $self->{DRIVERS} };
 }
 
 sub search {
-	my $self = shift;
-	my $isbn = shift;
-	
-	if($business_isbn_loaded) {
-		my $isbn_object = Business::ISBN->new($isbn);
-		croak("Invalid ISBN specified.\n") unless($isbn_object && $isbn_object->is_valid);
-	}
+    my ($self,$isbn) = @_;
+    
+    if($business_isbn_loaded) {
+        my $isbn_object = Business::ISBN->new($isbn);
+        croak("Invalid ISBN specified.\n") unless($isbn_object && $isbn_object->is_valid);
+    }
 
-	if( $self->drivers == 0 ) {
-		croak("No search drivers specified.\n");
-	}
+    croak("No search drivers specified.\n")
+        if( $self->drivers == 0 );
 
     my $record = WWW::Scraper::ISBN::Record->new();
-	$record->isbn($isbn);
-	foreach my $driver_name (@{ $self->{DRIVERS} }) {
-		my $driver = "WWW::Scraper::ISBN::${driver_name}_Driver"->new();
-		$driver->search($record->isbn);
-		if ($driver->found) {
-			$record->found("1");
-			$record->found_in("$driver_name");
-			$record->book($driver->book);
-			last;
-		}
-		if ($driver->error) {
-			$record->error($record->error.$driver->error);
-		}
-	}
-	return $record;
+    $record->isbn($isbn);
+    foreach my $driver_name (@{ $self->{DRIVERS} }) {
+        my $driver = "WWW::Scraper::ISBN::${driver_name}_Driver"->new();
+        $driver->search($record->isbn);
+        if ($driver->found) {
+            $record->found("1");
+            $record->found_in("$driver_name");
+            $record->book($driver->book);
+            last;
+        }
+
+        $record->error($record->error.$driver->error)
+            if ($driver->error);
+    }
+
+    return $record;
 }
 
 1;
@@ -85,18 +87,18 @@ WWW::Scraper::ISBN - Retrieve information about books from online sources.
   my $isbn = "123456789X";
   my $record = $scraper->search($isbn);
   if($record->found) {
-	print "Book ".$record->isbn." found by driver ".$record->found_in."\n";
-	my $book = $record->book;
+    print "Book ".$record->isbn." found by driver ".$record->found_in."\n";
+    my $book = $record->book;
 
     # do stuff with book hash
-	
+    
     print $book->{'title'};
-	print $book->{'author'};
-  	
+    print $book->{'author'};
+    
     # etc
   
   } else {
-	print $record->error;
+    print $record->error;
   }
 
 =head1 REQUIRES
@@ -175,8 +177,8 @@ the given isbn.
   my $scraper = WWW::Scraper::ISBN->new();
 
   # load the drivers.  requires that 
-  #	WWW::Scraper::ISBN::LOC_Driver and
-  #	WWW::Scraper::ISBN::ISBNnu_Driver 
+  # WWW::Scraper::ISBN::LOC_Driver and
+  # WWW::Scraper::ISBN::ISBNnu_Driver 
   # be installed
   $scraper->drivers("LOC", "ISBNnu"); 
 
