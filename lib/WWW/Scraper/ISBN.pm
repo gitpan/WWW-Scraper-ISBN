@@ -6,7 +6,7 @@ use warnings;
 use Carp;
 use WWW::Scraper::ISBN::Record;
 
-our $VERSION = '0.27';
+our $VERSION = '0.28';
 
 eval "use Business::ISBN";
 my $business_isbn_loaded = ! $@;
@@ -41,7 +41,7 @@ sub reset_drivers {
 
 sub search {
     my ($self,$isbn) = @_;
-    
+
     if($business_isbn_loaded) {
         my $isbn_object = Business::ISBN->new($isbn);
         croak("Invalid ISBN specified.\n") unless($isbn_object && $isbn_object->is_valid);

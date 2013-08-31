@@ -3,19 +3,25 @@ use strict;
 
 use lib qw(t/lib);
 
-use Test::More tests => 18;
+use Test::More;
 use WWW::Scraper::ISBN;
+
+# Can we create the object?
 
 my $scraper = WWW::Scraper::ISBN->new();
 isa_ok($scraper,'WWW::Scraper::ISBN');
 my $scraper2 = $scraper->new();
 isa_ok($scraper2,'WWW::Scraper::ISBN');
 
+# can we handle drivers?
+
 my @drivers = $scraper->drivers("Test");
 is(@drivers,1);
 is($drivers[0],'Test');
 @drivers = $scraper->reset_drivers();
 is(@drivers,0);
+
+# Can we search for a vslid ISBN, with no driver?
 
 my $isbn = "123456789X";
 my $record;
@@ -26,6 +32,8 @@ like($@,qr/No search drivers specified/);
 is(@drivers,1);
 is($drivers[0],'Test');
 
+# Can we search for a vslid ISBN, with driver?
+
 eval { $record = $scraper->search($isbn) };
 is($@,'');
 isa_ok($record,'WWW::Scraper::ISBN::Record');
@@ -35,10 +43,26 @@ is($b->{isbn},'123456789X');
 is($b->{title},'test title');
 is($b->{author},'test author');
 
+# Can we search for an invalid ISBN?
+
+eval "use Business::ISBN";
+my $business_isbn_loaded = ! $@;
+
 $isbn = "1234567890";
+$record = undef;
 eval { $record = $scraper->search($isbn) };
-is($@,'');
-isa_ok($record,'WWW::Scraper::ISBN::Record');
-is($record->found,0);
-$b = $record->book;
-is($b,undef);
+
+# Note: validation is different if Business::ISBN is installed
+
+if($business_isbn_loaded) {
+    like($@,qr/Invalid ISBN specified/);
+    isa_ok($record,undef);
+} else {
+    is($@,'');
+    isa_ok($record,'WWW::Scraper::ISBN::Record');
+    is($record->found,0);
+    $b = $record->book;
+    is($b,undef);
+}
+
+done_testing();
