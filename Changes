@@ -1,6 +1,9 @@
 Revision history for Perl distribution WWW::Scraper::ISBN
 =========================================================
 
+0.29    2013-09-03
+        - fixed isa/is test.
+
 0.28    2013-08-31
         - fixed tests if Business::ISBN is installed.
         - added done_testing() due to test differences.

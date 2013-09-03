@@ -56,7 +56,7 @@ eval { $record = $scraper->search($isbn) };
 
 if($business_isbn_loaded) {
     like($@,qr/Invalid ISBN specified/);
-    isa_ok($record,undef);
+    is($record,undef);
 } else {
     is($@,'');
     isa_ok($record,'WWW::Scraper::ISBN::Record');
