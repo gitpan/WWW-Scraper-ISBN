@@ -1,5 +1,6 @@
 Changes
 lib/WWW/Scraper/ISBN.pm
+LICENSE
 Makefile.PL
 MANIFEST
 META.json

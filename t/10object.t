@@ -45,24 +45,13 @@ is($b->{author},'test author');
 
 # Can we search for an invalid ISBN?
 
-eval "use Business::ISBN";
-my $business_isbn_loaded = ! $@;
-
 $isbn = "1234567890";
 $record = undef;
 eval { $record = $scraper->search($isbn) };
 
 # Note: validation is different if Business::ISBN is installed
 
-if($business_isbn_loaded) {
-    like($@,qr/Invalid ISBN specified/);
-    is($record,undef);
-} else {
-    is($@,'');
-    isa_ok($record,'WWW::Scraper::ISBN::Record');
-    is($record->found,0);
-    $b = $record->book;
-    is($b,undef);
-}
+like($@,qr/Invalid ISBN specified/);
+is($record,undef);
 
 done_testing();

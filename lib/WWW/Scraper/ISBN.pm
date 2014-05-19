@@ -3,13 +3,20 @@ package WWW::Scraper::ISBN;
 use strict;
 use warnings;
 
+our $VERSION = '0.30';
+
+#----------------------------------------------------------------------------
+# Library Modules
+
 use Carp;
 use WWW::Scraper::ISBN::Record;
-
-our $VERSION = '0.29';
+use WWW::Scraper::ISBN::Driver;
 
 eval "use Business::ISBN";
 my $business_isbn_loaded = ! $@;
+
+#----------------------------------------------------------------------------
+# Public API
 
 # Preloaded methods go here.
 sub new {
@@ -43,8 +50,13 @@ sub search {
     my ($self,$isbn) = @_;
 
     if($business_isbn_loaded) {
+        # Business::ISBN has strong validation algorithms
         my $isbn_object = Business::ISBN->new($isbn);
-        croak("Invalid ISBN specified.\n") unless($isbn_object && $isbn_object->is_valid);
+        croak("Invalid ISBN specified [$isbn].\n") unless($isbn_object && $isbn_object->is_valid);
+    } else {
+        # our fallback just validates it looks like an ISBN
+        my $isbn_object = WWW::Scraper::ISBN::Driver->new();
+        croak("Invalid ISBN specified [$isbn].\n") unless($isbn_object && $isbn_object->is_valid($isbn));        
     }
 
     croak("No search drivers specified.\n")
@@ -209,12 +221,12 @@ the given isbn.
 =head1 AUTHOR
 
   2004-2013 Andy Schamp, E<lt>andy@schamp.netE<gt>
-  2013      Barbie, E<lt>barbie@cpan.orgE<gt>
+  2013-2014 Barbie, E<lt>barbie@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
   Copyright 2004-2013 by Andy Schamp
-  Copyright 2013 by Barbie
+  Copyright 2013-2014 by Barbie
 
   This distribution is free software; you can redistribute it and/or
   modify it under the Artistic Licence v2.

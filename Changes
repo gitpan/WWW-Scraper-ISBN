@@ -1,5 +1,10 @@
-Revision history for Perl distribution WWW::Scraper::ISBN
-=========================================================
+Revision history for Perl distribution WWW-Scraper-ISBN
+=======================================================
+
+0.30    2014-05-19
+        - fixed distribution name in META.
+        - added LICENSE file.
+        - added basic ISBN validation when Business::ISBN is not installed.
 
 0.29    2013-09-03
         - fixed isa/is test.
