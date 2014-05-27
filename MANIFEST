@@ -1,5 +1,7 @@
 Changes
 lib/WWW/Scraper/ISBN.pm
+lib/WWW/Scraper/ISBN/Driver.pm
+lib/WWW/Scraper/ISBN/Record.pm
 LICENSE
 Makefile.PL
 MANIFEST
@@ -8,6 +10,9 @@ META.yml
 README
 t/01base.t
 t/10object.t
+t/11convert.t
+t/12driver.t
+t/13record.t
 t/90podtest.t
 t/91podcover.t
 t/94metatest.t

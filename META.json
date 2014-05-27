@@ -1,6 +1,6 @@
 {
     "name": "WWW-Scraper-ISBN",
-    "version": "0.30",
+    "version": "1.00",
     "abstract": "Retrieve information about books from online sources",
     "author": [
       "Andy Schamp <andy@schamp.net>",
@@ -24,9 +24,7 @@
         "runtime" : {
             "requires" : {
                 "perl": "5.006",
-                "Carp": "1.00",
-                "WWW::Scraper::ISBN::Driver": "0.22",
-                "WWW::Scraper::ISBN::Record": "0.19"
+                "Carp": "1.00"
             }
         },
         "test" : {
@@ -46,7 +44,15 @@
     "provides": {
         "WWW::Scraper::ISBN": {
             "file": "lib/WWW/Scraper/ISBN.pm",
-            "version": "0.30"
+            "version": "1.00"
+        },
+        "WWW::Scraper::ISBN::Driver": {
+            "file": "lib/WWW/Scraper/ISBN/Driver.pm",
+            "version": "1.00"
+        },
+        "WWW::Scraper::ISBN::Record": {
+            "file": "lib/WWW/Scraper/ISBN/Record.pm",
+            "version": "1.00"
         }
     },
     "no_index": {
