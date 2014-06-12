@@ -1,6 +1,9 @@
 Revision history for WWW-Scraper-ISBN
 =====================================
 
+1.01    2014-06-12
+        - added tests and checks for blank searches.
+
 1.00    2014-05-27
         - merged WWW-Scraper-ISBN-Record into this distro.
         - merged WWW-Scraper-ISBN-Driver into this distro.

@@ -21,7 +21,7 @@ is($drivers[0],'Test');
 @drivers = $scraper->reset_drivers();
 is(@drivers,0);
 
-# Can we search for a vslid ISBN, with no driver?
+# Can we search for a valid ISBN, with no driver?
 
 my $isbn = "123456789X";
 my $record;
@@ -32,7 +32,7 @@ like($@,qr/No search drivers specified/);
 is(@drivers,1);
 is($drivers[0],'Test');
 
-# Can we search for a vslid ISBN, with driver?
+# Can we search for a valid ISBN, with driver?
 
 eval { $record = $scraper->search($isbn) };
 is($@,'');
@@ -42,6 +42,10 @@ my $b = $record->book;
 is($b->{isbn},'123456789X');
 is($b->{title},'test title');
 is($b->{author},'test author');
+
+# Can we search for a blank ISBN?
+eval { $record = $scraper->search(); };
+like($@,qr/Invalid ISBN specified/);
 
 # Can we search for an invalid ISBN?
 

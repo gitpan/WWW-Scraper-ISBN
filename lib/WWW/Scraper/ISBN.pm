@@ -3,7 +3,7 @@ package WWW::Scraper::ISBN;
 use strict;
 use warnings;
 
-our $VERSION = '1.00';
+our $VERSION = '1.01';
 
 #----------------------------------------------------------------------------
 # Library Modules
@@ -48,6 +48,8 @@ sub reset_drivers {
 
 sub search {
     my ($self,$isbn) = @_;
+
+    croak("Invalid ISBN specified [].\n") unless($isbn);        
 
     if($business_isbn_loaded) {
         # Business::ISBN has strong validation algorithms
