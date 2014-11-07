@@ -6,9 +6,14 @@ sub search {
     my $self = shift;
     my $isbn = shift;
 
-    if($isbn ne '123456789X') {
+    if($isbn eq '9780987654328') {
         $self->found(0);
         $self->book(undef);
+        return;
+    }
+
+    if($isbn eq '9790571239589') {
+        $self->handler('Website unavailable');
         return;
     }
 

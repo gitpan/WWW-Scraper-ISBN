@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 use strict;
 
-use Test::More tests => 21;
+use Test::More tests => 27;
 
 use WWW::Scraper::ISBN::Driver;
 
@@ -43,3 +43,10 @@ like($@,qr/Child class/);
 is($driver->handler('this is still an error'),0);
 is($driver->found,0);
 is($driver->error,'this is still an error');
+
+is($driver->is_valid(),0);
+is($driver->is_valid('098765432X'),0);
+is($driver->is_valid('9990571239567'),0);
+is($driver->is_valid('9780571239567'),0);
+is($driver->is_valid('0987654322'),1);
+is($driver->is_valid('9780571239566'),1);

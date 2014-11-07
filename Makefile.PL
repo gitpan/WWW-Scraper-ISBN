@@ -8,7 +8,7 @@ use ExtUtils::MakeMaker;
 
 WriteMakefile(
     AUTHOR              => 'Barbie <barbie@cpan.org>',
-    NAME                => 'WWW-Scraper-ISBN',
+    NAME                => 'WWW::Scraper::ISBN',
     VERSION_FROM        => 'lib/WWW/Scraper/ISBN.pm',
     ABSTRACT            => 'Retrieve information about books from online sources',
     NO_META             => 1,
